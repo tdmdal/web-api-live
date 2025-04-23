@@ -30,7 +30,7 @@ title: "First Contact: Web APIs"
 ## API Endpoints{.smaller}
 
 - A specific URL that provides access to a particular resource or functionality
-- Alien Species API: `http://eijoac.pythonanywhere.com`
+- Alien Species API: `https://eijoac.pythonanywhere.com`
   - `/aliens/random`: Get a random alien species
   - `/species`: Get a list of all species
   - `/habitats`: Get a list of all habitats
@@ -43,7 +43,7 @@ title: "First Contact: Web APIs"
 ```{pyodide}
 import requests
 
-url = "http://eijoac.pythonanywhere.com/aliens/random"
+url = "https://eijoac.pythonanywhere.com/aliens/random"
 response = requests.get(url)
 
 if response.status_code == 200:
@@ -59,7 +59,7 @@ else:
 import requests
 from rich import print_json
 
-url = "http://eijoac.pythonanywhere.com/aliens/random"
+url = "https://eijoac.pythonanywhere.com/aliens/random"
 response = requests.get(url)
 
 if response.status_code == 200:
@@ -105,7 +105,7 @@ else:
 import requests
 from rich import print_json
 
-url = "http://eijoac.pythonanywhere.com/aliens/random"
+url = "https://eijoac.pythonanywhere.com/aliens/random"
 response = requests.get(url)
 
 # Print the default request headers
@@ -124,7 +124,7 @@ else:
 import requests
 from rich import print_json
 
-url = "http://eijoac.pythonanywhere.com/aliens/random"
+url = "https://eijoac.pythonanywhere.com/aliens/random"
 
 # Set the Accept header to request JSON response
 headers = {"Accept": "application/json"}
@@ -183,7 +183,7 @@ else:
   - Not all APIs support query parameters
   - Parameters can be used to filter results, sort data, or paginate through large datasets
 - Query parameters are added to the URL after a `?` and separated by `&`
-  - Example: `http://eijoac.pythonanywhere.com/aliens?habitat=Jungle&size=Large`
+  - Example: `https://eijoac.pythonanywhere.com/aliens?habitat=Jungle&size=Large`
   - Some APIs use **path parameters** (e.g., `/aliens/species/{species_name}`)
 
 ## Query Parameters (set parameters)
@@ -192,7 +192,7 @@ else:
 import requests
 from rich import print_json
 
-url = "http://eijoac.pythonanywhere.com/aliens"
+url = "https://eijoac.pythonanywhere.com/aliens"
 
 # Set query parameters
 params = {"habitat": "Desert", "size": "Medium"}
@@ -220,7 +220,7 @@ Try filtering aliens by habitat and size with other combinations too!
 import requests
 from rich import print_json
 
-url = "http://eijoac.pythonanywhere.com/aliens"
+url = "https://eijoac.pythonanywhere.com/aliens"
 
 # Set query parameters
 params = ______
@@ -243,7 +243,7 @@ Encounter and learn about random aliens.
 import requests
 
 def get_random_alien():
-    url = "http://eijoac.pythonanywhere.com/aliens/random"
+    url = "https://eijoac.pythonanywhere.com/aliens/random"
     response = requests.get(url)
     return response.json() if response.status_code == 200 else None
 

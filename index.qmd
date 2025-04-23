@@ -17,7 +17,7 @@ toc-expand: 2
 
 Web APIs allow communication between applications over the internet using HTTP methods such as GET, POST, PUT, and DELETE. Many websites offer their data and services through APIs, enabling developers to access them programmatically (e.g., [CoinGecko API](https://docs.coingecko.com/reference/introduction) and [OpenAI API](https://platform.openai.com/docs/overview)).
 
-This tutorial will guide beginners through the process of interacting with a web API using Python's `requests` library. We'll explore a custom-built Alien Species API hosted at `http://eijoac.pythonanywhere.com`. The API documentation is available [here](http://eijoac.pythonanywhere.com/docs).
+This tutorial will guide beginners through the process of interacting with a web API using Python's `requests` library. We'll explore a custom-built Alien Species API hosted at `https://eijoac.pythonanywhere.com`. The API documentation is available [here](https://eijoac.pythonanywhere.com/docs).
 
 This is a great beginner project for understanding how APIs work—including endpoints, headers, and responses—while building a fun application. By the end of this tutorial, you will:
 
@@ -75,7 +75,7 @@ Let’s start by making a simple GET request to retrieve a random alien:
 ```{pyodide}
 import requests
 
-url = "http://eijoac.pythonanywhere.com/aliens/random"
+url = "https://eijoac.pythonanywhere.com/aliens/random"
 response = requests.get(url)
 
 if response.status_code == 200:
@@ -104,7 +104,7 @@ To display the JSON data more cleanly, we can use the `rich` library:
 import requests
 from rich import print_json
 
-url = "http://eijoac.pythonanywhere.com/aliens/random"
+url = "https://eijoac.pythonanywhere.com/aliens/random"
 response = requests.get(url)
 
 if response.status_code == 200:
@@ -151,7 +151,7 @@ The requests library by default sets some headers for you.
 import requests
 from rich import print_json
 
-url = "http://eijoac.pythonanywhere.com/aliens/random"
+url = "https://eijoac.pythonanywhere.com/aliens/random"
 response = requests.get(url)
 
 # Print the default request headers
@@ -170,7 +170,7 @@ You can pass headers in a GET request like this:
 import requests
 from rich import print_json
 
-url = "http://eijoac.pythonanywhere.com/aliens/random"
+url = "https://eijoac.pythonanywhere.com/aliens/random"
 
 # Set the Accept header to request JSON response
 headers = {"Accept": "application/json"}
@@ -235,7 +235,7 @@ else:
 
 APIs often let you pass **query parameters** to filter or modify results. These parameters go in the URL after a question mark (`?`) and are joined by ampersands (`&`).
 
-Example: `http://eijoac.pythonanywhere.com/aliens?habitat=Desert&size=Medium`.
+Example: `https://eijoac.pythonanywhere.com/aliens?habitat=Desert&size=Medium`.
 
 Here’s how to send those parameters in Python:
 
@@ -243,7 +243,7 @@ Here’s how to send those parameters in Python:
 import requests
 from rich import print_json
 
-url = "http://eijoac.pythonanywhere.com/aliens"
+url = "https://eijoac.pythonanywhere.com/aliens"
 
 # Set query parameters
 params = {"habitat": "Desert", "size": "Medium"}
@@ -273,7 +273,7 @@ Try filtering aliens by habitat and size. For example, `habitat=Jungle` and `siz
 import requests
 from rich import print_json
 
-url = "http://eijoac.pythonanywhere.com/aliens"
+url = "https://eijoac.pythonanywhere.com/aliens"
 
 # Set query parameters
 params = ______
@@ -297,7 +297,7 @@ What can you do after you retrieve the data from the API? You can build a simple
 import requests
 
 def get_random_alien():
-    url = "http://eijoac.pythonanywhere.com/aliens/random"
+    url = "https://eijoac.pythonanywhere.com/aliens/random"
     response = requests.get(url)
     return response.json() if response.status_code == 200 else None
 
