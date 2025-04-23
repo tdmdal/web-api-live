@@ -1,0 +1,21 @@
+project:
+  type: website
+  output-dir: docs
+  render: 
+    - index.qmd
+
+website:
+  title: "A Beginner's Guide to Making Web API Calls"
+  description: "A Short Tutorials on Web API for RC Students"
+  repo-url: https://github.com/tdmdal/web-api-live
+  repo-actions: [issue]
+  repo-subdir: "docs"
+  favicon: api.png
+  page-navigation: true
+  page-footer: 
+    left: Created by Jay / Back to [TDMDAL Computing](https://tdmdal.github.io/)
+    right: Built with [Quarto](https://quarto.org/), [Quarto-live](https://r-wasm.github.io/quarto-live/) & ChatGPT.
+ 
+theme:
+  light: [cosmo, styles.scss]
+  dark: solar

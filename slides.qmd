@@ -1,0 +1,259 @@
+---
+format:
+  live-revealjs:
+    theme: default
+    output-dir: docs
+title: "First Contact: Web APIs"
+---
+
+## Web APIs
+
+- What's an API?
+  - API vs UI
+
+- What is a Web API?
+  - HTTP-based API
+  - HTTP methods: GET, POST, etc.
+  - Examples: [CoinGecko API](https://docs.coingecko.com/reference/introduction) and [OpenAI API](https://platform.openai.com/docs/overview)
+  
+## Plan for Today{.smaller}
+
+- Learn how to interact with a Web API
+  - Make simple API calls (GET requests)
+  - Parse JSON data returned from an API call
+  - Recognize common HTTP responses
+  - Understand what HTTP headers are
+  - Build a simple alien species explorer game
+- Use Python's `requests` library
+- Use a custom-built Alien Species API
+
+## API Endpoints{.smaller}
+
+- A specific URL that provides access to a particular resource or functionality
+- Alien Species API: `http://eijoac.pythonanywhere.com`
+  - `/aliens/random`: Get a random alien species
+  - `/species`: Get a list of all species
+  - `/habitats`: Get a list of all habitats
+  - `/sizes`: Get a list of all sizes
+  - `/aliens/species/{species_name}`: Get alien details by species
+  - `GET /aliens?habitat=Jungle&size=Large`: Filter aliens by habitat and/or size
+
+## GET Request
+
+```{pyodide}
+import requests
+
+url = "http://eijoac.pythonanywhere.com/aliens/random"
+response = requests.get(url)
+
+if response.status_code == 200:
+    data = response.json()
+    print(data)
+else:
+    print(f"Error: {response.status_code}")
+```
+
+## GET Request (continued)
+
+```{pyodide}
+import requests
+from rich import print_json
+
+url = "http://eijoac.pythonanywhere.com/aliens/random"
+response = requests.get(url)
+
+if response.status_code == 200:
+    data = response.json()
+    # Use rich to print the JSON data nicely
+    print_json(data=data)
+else:
+    print(f"Error: {response.status_code}")
+```
+
+## GET Request (exercise)
+
+Try calling the `/species`, `/habitats`, and `/sizes` endpoints.
+
+```{pyodide}
+#| exercise: ex_get
+#| caption: Get Exercise
+import requests
+from rich import print_json
+
+url = ______
+response = requests.get(url)
+
+if response.status_code == 200:
+    data = ______
+    print_json(data=data)
+else:
+    print(f"Error: {response.status_code}")
+```
+
+## HTTP Headers{.smaller}
+
+- Provide additional information for requests and responses.
+- Common HTTP Headers are:
+  - `Content-Type`: Specifies the format of request/response data
+  - `Accept`: Tells the server what kind of response format you want.
+  - `User-Agent`: Identifies the client (e.g., browser or app).
+  - `Authorization`: Sends authentication credentials like API keys.
+
+## HTTP Headers (default headers)
+
+```{pyodide}
+import requests
+from rich import print_json
+
+url = "http://eijoac.pythonanywhere.com/aliens/random"
+response = requests.get(url)
+
+# Print the default request headers
+print(response.request.headers)
+
+if response.status_code == 200:
+    data = response.json()
+    print_json(data=data)
+else:
+    print(f"Error: {response.status_code}")
+```
+
+## HTTP Headers (set headers)
+
+```{pyodide}
+import requests
+from rich import print_json
+
+url = "http://eijoac.pythonanywhere.com/aliens/random"
+
+# Set the Accept header to request JSON response
+headers = {"Accept": "application/json"}
+
+# Make the GET request with headers
+response = requests.get(url, headers=headers)
+
+# Print the request headers
+print(response.request.headers)
+
+if response.status_code == 200:
+    data = response.json()
+    print_json(data=data)
+else:
+    print(f"Error: {response.status_code}")
+```
+
+## HTTP Response Status Codes{.smaller}
+
+- Indicate the result of a request.
+- Some typical HTTP status codes:
+  - **200 OK**: Request successful
+  - **201 Created**: Resource successfully created (commonly with POST requests)
+  - **400 Bad Request**: Invalid request
+  - **401 Unauthorized**: Authentication required
+  - **404 Not Found**: Resource not found
+  - **500 Internal Server Error**: Server error
+
+## Status Codes (exercise){.smaller}
+Call `/aliens/species/Vexor` and then try `/aliens/species/Unknown`.
+
+```{pyodide}
+#| exercise: ex_response_code
+#| caption: HTTP Response Status Code Exercise
+import requests
+from rich import print_json
+
+url = ______
+response = requests.get(url)
+
+if response.status_code == 200:
+    data = response.json()
+    print_json(data=data)
+else:
+    print(f"Error: {response.status_code}")
+    try:
+        error_data = response.json()
+        print("Error:", error_data.get("detail"))
+    except ValueError:
+        print("Non-JSON error response:", response.text)
+```
+
+## Query Parameters{.smaller}
+
+- APIs often let you pass **query parameters** to filter or modify results
+  - Not all APIs support query parameters
+  - Parameters can be used to filter results, sort data, or paginate through large datasets
+- Query parameters are added to the URL after a `?` and separated by `&`
+  - Example: `http://eijoac.pythonanywhere.com/aliens?habitat=Jungle&size=Large`
+  - Some APIs use **path parameters** (e.g., `/aliens/species/{species_name}`)
+
+## Query Parameters (set parameters)
+
+```{pyodide}
+import requests
+from rich import print_json
+
+url = "http://eijoac.pythonanywhere.com/aliens"
+
+# Set query parameters
+params = {"habitat": "Desert", "size": "Medium"}
+
+# Make the GET request with query parameters
+response = requests.get(url, params=params)
+
+# Print the full request URL with query parameters
+print(f"Full URL: {response.request.url}")
+
+if response.status_code == 200:
+    data = response.json()
+    print_json(data=data)
+else:
+    print(f"Error: {response.status_code}")
+```
+
+## Query Parameters (exercise){.smaller}
+
+Try filtering aliens by habitat and size with other combinations too!
+
+```{pyodide}
+#| exercise: ex_filter
+#| caption: Query Parameters Exercise
+import requests
+from rich import print_json
+
+url = "http://eijoac.pythonanywhere.com/aliens"
+
+# Set query parameters
+params = ______
+
+# Make the GET request with query parameters
+response = requests.get(url, params=______)
+
+if response.status_code == 200:
+    data = response.json()
+    print_json(data=data)
+else:
+    print(f"Error: {response.status_code}")
+```
+
+## A Simple Alien Explorer Game
+
+Encounter and learn about random aliens.
+
+```{pyodide}
+import requests
+
+def get_random_alien():
+    url = "http://eijoac.pythonanywhere.com/aliens/random"
+    response = requests.get(url)
+    return response.json() if response.status_code == 200 else None
+
+def play():
+    alien = get_random_alien()
+    if alien:
+        print(f"You encountered a {alien['species']} from the {alien['habitat']} habitat!")
+        print(f"Size: {alien['size']}, Weight: {alien['weight']}, Lifespan: {alien['lifespan']} years")
+    else:
+        print("Failed to load alien data.")
+
+play()
+```

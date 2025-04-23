@@ -1,0 +1,72 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "First Contact: A Beginner’s Guide to Web APIs",
+    "section": "",
+    "text": "Web APIs allow communication between applications over the internet using HTTP methods such as GET, POST, PUT, and DELETE. Many websites offer their data and services through APIs, enabling developers to access them programmatically (e.g., CoinGecko API and OpenAI API).\nThis tutorial will guide beginners through the process of interacting with a web API using Python’s requests library. We’ll explore a custom-built Alien Species API hosted at http://eijoac.pythonanywhere.com. The API documentation is available here.\nThis is a great beginner project for understanding how APIs work—including endpoints, headers, and responses—while building a fun application. By the end of this tutorial, you will:\n\nKnow how to make simple API calls (we’ll focus on GET requests).\nUnderstand how to parse JSON data returned from an API call.\nRecognize common HTTP responses.\nUnderstand what HTTP headers are.\nBuild a simple alien species explorer game."
+  },
+  {
+    "objectID": "index.html#introduction",
+    "href": "index.html#introduction",
+    "title": "First Contact: A Beginner’s Guide to Web APIs",
+    "section": "",
+    "text": "Web APIs allow communication between applications over the internet using HTTP methods such as GET, POST, PUT, and DELETE. Many websites offer their data and services through APIs, enabling developers to access them programmatically (e.g., CoinGecko API and OpenAI API).\nThis tutorial will guide beginners through the process of interacting with a web API using Python’s requests library. We’ll explore a custom-built Alien Species API hosted at http://eijoac.pythonanywhere.com. The API documentation is available here.\nThis is a great beginner project for understanding how APIs work—including endpoints, headers, and responses—while building a fun application. By the end of this tutorial, you will:\n\nKnow how to make simple API calls (we’ll focus on GET requests).\nUnderstand how to parse JSON data returned from an API call.\nRecognize common HTTP responses.\nUnderstand what HTTP headers are.\nBuild a simple alien species explorer game."
+  },
+  {
+    "objectID": "index.html#coding-along",
+    "href": "index.html#coding-along",
+    "title": "First Contact: A Beginner’s Guide to Web APIs",
+    "section": "Coding Along",
+    "text": "Coding Along\nThis tutorial site is interactive, allowing you to run code snippets directly in your browser. Let’s start with a simple “Hello, World!” program:\n\n\n\n\n\n\nClick the “Run Code” button to execute the snippet. You can also edit the code in the block—try printing a different message if you’d like. To reset the snippet to its original version, click the “Start Over” button.\nYou will also see exercises throughout the tutorial to help you practice what you’ve learned.\n\n\n\n\n\n\nNote\n\n\n\nThis tutorial site is a bit special: it lets you run Python code and see the results immediately in your browser. As a result, it might feel a little slow at times—it needs to load the Python interpreter and necessary libraries. Please be patient while it sets up.\n\n\nYou can also follow along in your own coding environment. Just don’t forget to install the required packages:\npip install requests rich\nThe rich library is used to format the output nicely for printing."
+  },
+  {
+    "objectID": "index.html#understanding-api-endpoints",
+    "href": "index.html#understanding-api-endpoints",
+    "title": "First Contact: A Beginner’s Guide to Web APIs",
+    "section": "Understanding API Endpoints",
+    "text": "Understanding API Endpoints\nAn API endpoint is a specific URL that provides access to a particular resource or functionality in an API. Here are all the endpoints from the Alien Species API:\n\nGET /aliens/random - Get a random alien\nGET /species - List all species\nGET /habitats - List all habitats\nGET /sizes - List all sizes\nGET /aliens/species/{species_name} - Get alien details by species\nGET /aliens?habitat=Jungle&size=Large - Filter aliens by habitat and/or size"
+  },
+  {
+    "objectID": "index.html#making-a-get-request",
+    "href": "index.html#making-a-get-request",
+    "title": "First Contact: A Beginner’s Guide to Web APIs",
+    "section": "Making a GET Request",
+    "text": "Making a GET Request\nA GET request retrieves data from an API endpoint. It is the most common HTTP method used in APIs. To make a GET request, we’ll use Python’s requests library. The requests.get() function sends a request to the specified URL and returns a response object.\nLet’s start by making a simple GET request to retrieve a random alien:\n\n\n\n\n\n\nIn this code snippet:\n\nWe import the requests library.\nWe define the URL of the API endpoint.\nWe use requests.get(url) to send a GET request to the API endpoint.\nWe check the response status code:\n\nIf it’s 200, we parse the JSON response with response.json() and print the data.\nOtherwise, we print an error message.\n\n\nThe response status code indicates whether the request was successful. A status code of 200 means the request was successful, while other codes (like 404 for “Not Found”) indicate an error. You will learn more about status codes later in this tutorial.\nOur API response is in JSON format, which is a common data format for APIs (but not the only one). JSON (JavaScript Object Notation) is a lightweight data interchange format that is easy for both humans and machines to read. It uses a simple key-value pair structure, similar to Python dictionaries (e.g., {\"key\": \"value\"}).\nTo display the JSON data more cleanly, we can use the rich library:\n\n\n\n\n\n\n\nExercise ☕📝\nTry calling the /species, /habitats, and /sizes endpoints. Print the results."
+  },
+  {
+    "objectID": "index.html#understanding-http-headers",
+    "href": "index.html#understanding-http-headers",
+    "title": "First Contact: A Beginner’s Guide to Web APIs",
+    "section": "Understanding HTTP Headers",
+    "text": "Understanding HTTP Headers\nHTTP headers provide additional information for requests and responses.\nCommon HTTP Headers are:\n\nContent-Type: Specifies the format of request/response data\nAccept: Tells the server what kind of response format you want.\nUser-Agent: Identifies the client (e.g., browser or app).\nAuthorization: Sends authentication credentials like API keys.\n\nThe requests library by default sets some headers for you.\n\n\n\n\n\n\nYou can pass headers in a GET request like this:\n\n\n\n\n\n\nThe headers parameter takes a dictionary. In this example, we set Accept to request a JSON response. The Alien Species API already returns JSON by default, but it’s good practice to explicitly request it."
+  },
+  {
+    "objectID": "index.html#understanding-http-response-status-codes",
+    "href": "index.html#understanding-http-response-status-codes",
+    "title": "First Contact: A Beginner’s Guide to Web APIs",
+    "section": "Understanding HTTP Response Status Codes",
+    "text": "Understanding HTTP Response Status Codes\nHTTP response status codes indicate the result of a request.\nSome typical HTTP status codes:\n\n200 OK: Request successful\n201 Created: Resource successfully created (commonly with POST requests)\n400 Bad Request: Invalid request\n401 Unauthorized: Authentication required\n404 Not Found: Resource not found\n500 Internal Server Error: Server error\n\nWhile those are common status codes, the API you are working with may have its own set of status codes. Always refer to the API documentation for the specific status codes it uses.\nIn the Alien Species API, the /aliens/species/{species_name} endpoint returns a 404 status and in addition a helpful message if the species isn’t found.\n\nExercise\nCall /aliens/species/Vexor and then try /aliens/species/Unknown. Observe the status codes returned."
+  },
+  {
+    "objectID": "index.html#using-query-parameters-for-filtering",
+    "href": "index.html#using-query-parameters-for-filtering",
+    "title": "First Contact: A Beginner’s Guide to Web APIs",
+    "section": "Using Query Parameters for Filtering",
+    "text": "Using Query Parameters for Filtering\nAPIs often let you pass query parameters to filter or modify results. These parameters go in the URL after a question mark (?) and are joined by ampersands (&).\nExample: http://eijoac.pythonanywhere.com/aliens?habitat=Desert&size=Medium.\nHere’s how to send those parameters in Python:\n\n\n\n\n\n\nThe params dictionary contains the query parameters. The requests.get() function automatically encodes them into the URL.\n\nExercise\nTry filtering aliens by habitat and size. For example, habitat=Jungle and size=Large. Try other combinations too!"
+  },
+  {
+    "objectID": "index.html#building-a-simple-alien-explorer-game",
+    "href": "index.html#building-a-simple-alien-explorer-game",
+    "title": "First Contact: A Beginner’s Guide to Web APIs",
+    "section": "Building a Simple Alien Explorer Game",
+    "text": "Building a Simple Alien Explorer Game\nWhat can you do after you retrieve the data from the API? You can build a simple game! Let’s create an alien explorer game where you encounter random aliens and learn about their species, habitat, size, weight, and lifespan."
+  },
+  {
+    "objectID": "index.html#conclusion",
+    "href": "index.html#conclusion",
+    "title": "First Contact: A Beginner’s Guide to Web APIs",
+    "section": "Conclusion",
+    "text": "Conclusion\nYou’ve learned how to make web API calls using Python with the Alien Species API. You now understand endpoints, headers, HTTP response status code, query parameters, and how to build simple programs based on real-time data. Have fun exploring more APIs and building your own projects!"
+  }
+]

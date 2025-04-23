@@ -1,0 +1,317 @@
+---
+title: "First Contact: A Beginner’s Guide to Web APIs"
+format:
+  live-html:
+    pyodide:
+      packages:
+        - requests
+        - rich
+    fontsize: 1em
+toc: true
+toc-location: left
+toc-expand: 2
+---
+
+
+## Introduction
+
+Web APIs allow communication between applications over the internet using HTTP methods such as GET, POST, PUT, and DELETE. Many websites offer their data and services through APIs, enabling developers to access them programmatically (e.g., [CoinGecko API](https://docs.coingecko.com/reference/introduction) and [OpenAI API](https://platform.openai.com/docs/overview)).
+
+This tutorial will guide beginners through the process of interacting with a web API using Python's `requests` library. We'll explore a custom-built Alien Species API hosted at `http://eijoac.pythonanywhere.com`. The API documentation is available [here](http://eijoac.pythonanywhere.com/docs).
+
+This is a great beginner project for understanding how APIs work—including endpoints, headers, and responses—while building a fun application. By the end of this tutorial, you will:
+
+* Know how to make simple API calls (we'll focus on GET requests).
+* Understand how to parse JSON data returned from an API call.
+* Recognize common HTTP responses.
+* Understand what HTTP headers are.
+* Build a simple alien species explorer game.
+
+
+## Coding Along
+
+This tutorial site is interactive, allowing you to run code snippets directly in your browser. Let's start with a simple "Hello, World!" program:
+
+```{pyodide}
+# Printing Hello World
+print("Hello, World! Let's learn about Web API calls!")
+```
+
+Click the "Run Code" button to execute the snippet. You can also edit the code in the block—try printing a different message if you'd like. To reset the snippet to its original version, click the "Start Over" button.
+
+You will also see exercises throughout the tutorial to help you practice what you've learned.
+
+::: {.callout-note}
+This tutorial site is a bit special: it lets you run Python code and see the results immediately in your browser. As a result, it might feel a little slow at times—it needs to load the Python interpreter and necessary libraries. Please be patient while it sets up.
+:::
+
+You can also follow along in your own coding environment. Just don't forget to install the required packages:
+
+``` {.bash}
+pip install requests rich
+```
+
+The `rich` library is used to format the output nicely for printing.
+
+
+## Understanding API Endpoints
+
+An **API endpoint** is a specific URL that provides access to a particular resource or functionality in an API. Here are all the endpoints from the Alien Species API:
+
+- `GET /aliens/random` - Get a random alien
+- `GET /species` - List all species
+- `GET /habitats` - List all habitats
+- `GET /sizes` - List all sizes
+- `GET /aliens/species/{species_name}` - Get alien details by species
+- `GET /aliens?habitat=Jungle&size=Large` - Filter aliens by habitat and/or size
+
+
+## Making a GET Request
+
+A GET request retrieves data from an API endpoint. It is the most common HTTP method used in APIs. To make a GET request, we’ll use Python’s `requests` library. The `requests.get()` function sends a request to the specified URL and returns a response object.
+
+Let’s start by making a simple GET request to retrieve a random alien:
+
+```{pyodide}
+import requests
+
+url = "http://eijoac.pythonanywhere.com/aliens/random"
+response = requests.get(url)
+
+if response.status_code == 200:
+    data = response.json()
+    print(data)
+else:
+    print(f"Error: {response.status_code}")
+```
+
+In this code snippet:
+
+- We import the `requests` library.
+- We define the URL of the API endpoint.
+- We use `requests.get(url)` to send a GET request to the API endpoint.
+- We check the response status code:
+  - If it’s `200`, we parse the JSON response with `response.json()` and print the data.
+  - Otherwise, we print an error message.
+
+The response status code indicates whether the request was successful. A status code of `200` means the request was successful, while other codes (like `404` for "Not Found") indicate an error. You will learn more about status codes later in this tutorial.
+
+Our API response is in **JSON** format, which is a common data format for APIs (but not the only one). [JSON (JavaScript Object Notation)](https://en.wikipedia.org/wiki/JSON) is a lightweight data interchange format that is easy for both humans and machines to read. It uses a simple key-value pair structure, similar to Python dictionaries (e.g., `{"key": "value"}`).
+
+To display the JSON data more cleanly, we can use the `rich` library:
+
+```{pyodide}
+import requests
+from rich import print_json
+
+url = "http://eijoac.pythonanywhere.com/aliens/random"
+response = requests.get(url)
+
+if response.status_code == 200:
+    data = response.json()
+    # Use rich to print the JSON data nicely
+    print_json(data=data)
+else:
+    print(f"Error: {response.status_code}")
+```
+
+#### Exercise ☕📝
+Try calling the `/species`, `/habitats`, and `/sizes` endpoints. Print the results.
+
+```{pyodide}
+#| exercise: ex_get
+#| caption: Get Exercise
+import requests
+from rich import print_json
+
+url = ______
+response = requests.get(url)
+
+if response.status_code == 200:
+    data = ______
+    print_json(data=data)
+else:
+    print(f"Error: {response.status_code}")
+```
+
+## Understanding HTTP Headers
+
+[HTTP headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers) provide additional information for requests and responses.
+
+Common HTTP Headers are:
+
+- `Content-Type`: Specifies the format of request/response data
+- `Accept`: Tells the server what kind of response format you want.
+- `User-Agent`: Identifies the client (e.g., browser or app).
+- `Authorization`: Sends authentication credentials like API keys.
+
+The requests library by default sets some headers for you.
+
+```{pyodide}
+import requests
+from rich import print_json
+
+url = "http://eijoac.pythonanywhere.com/aliens/random"
+response = requests.get(url)
+
+# Print the default request headers
+print(response.request.headers)
+
+if response.status_code == 200:
+    data = response.json()
+    print_json(data=data)
+else:
+    print(f"Error: {response.status_code}")
+```
+
+You can pass headers in a GET request like this:
+
+```{pyodide}
+import requests
+from rich import print_json
+
+url = "http://eijoac.pythonanywhere.com/aliens/random"
+
+# Set the Accept header to request JSON response
+headers = {"Accept": "application/json"}
+
+# Make the GET request with headers
+response = requests.get(url, headers=headers)
+
+# Print the request headers
+print(response.request.headers)
+
+if response.status_code == 200:
+    data = response.json()
+    print_json(data=data)
+else:
+    print(f"Error: {response.status_code}")
+```
+
+The `headers` parameter takes a dictionary. In this example, we set `Accept` to request a JSON response. The Alien Species API already returns JSON by default, but it’s good practice to explicitly request it.
+
+## Understanding HTTP Response Status Codes
+
+[HTTP response status codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status) indicate the result of a request.
+
+Some typical HTTP status codes:
+
+- **200 OK**: Request successful
+- **201 Created**: Resource successfully created (commonly with POST requests)
+- **400 Bad Request**: Invalid request
+- **401 Unauthorized**: Authentication required
+- **404 Not Found**: Resource not found
+- **500 Internal Server Error**: Server error
+
+While those are common status codes, the API you are working with may have its own set of status codes. Always refer to the API documentation for the specific status codes it uses.
+
+In the Alien Species API, the `/aliens/species/{species_name}` endpoint returns a `404` status and in addition a helpful message if the species isn't found. 
+
+#### Exercise
+Call `/aliens/species/Vexor` and then try `/aliens/species/Unknown`. Observe the status codes returned.
+
+```{pyodide}
+#| exercise: ex_response_code
+#| caption: HTTP Response Status Code Exercise
+import requests
+from rich import print_json
+
+url = ______
+response = requests.get(url)
+
+if response.status_code == 200:
+    data = response.json()
+    print_json(data=data)
+else:
+    print(f"Error: {response.status_code}")
+    try:
+        error_data = response.json()
+        print("Error:", error_data.get("detail"))
+    except ValueError:
+        print("Non-JSON error response:", response.text)
+```
+
+## Using Query Parameters for Filtering
+
+APIs often let you pass **query parameters** to filter or modify results. These parameters go in the URL after a question mark (`?`) and are joined by ampersands (`&`).
+
+Example: `http://eijoac.pythonanywhere.com/aliens?habitat=Desert&size=Medium`.
+
+Here’s how to send those parameters in Python:
+
+```{pyodide}
+import requests
+from rich import print_json
+
+url = "http://eijoac.pythonanywhere.com/aliens"
+
+# Set query parameters
+params = {"habitat": "Desert", "size": "Medium"}
+
+# Make the GET request with query parameters
+response = requests.get(url, params=params)
+
+# Print the full request URL with query parameters
+print(f"Full URL: {response.request.url}")
+
+if response.status_code == 200:
+    data = response.json()
+    print_json(data=data)
+else:
+    print(f"Error: {response.status_code}")
+```
+
+The `params` dictionary contains the query parameters. The `requests.get()` function automatically encodes them into the URL.
+
+#### Exercise
+
+Try filtering aliens by habitat and size. For example, `habitat=Jungle` and `size=Large`. Try other combinations too!
+
+```{pyodide}
+#| exercise: ex_filter
+#| caption: Query Parameters Exercise
+import requests
+from rich import print_json
+
+url = "http://eijoac.pythonanywhere.com/aliens"
+
+# Set query parameters
+params = ______
+
+# Make the GET request with query parameters
+response = requests.get(url, params=______)
+
+if response.status_code == 200:
+    data = response.json()
+    print_json(data=data)
+else:
+    print(f"Error: {response.status_code}")
+```
+
+
+## Building a Simple Alien Explorer Game
+
+What can you do after you retrieve the data from the API? You can build a simple game! Let's create an alien explorer game where you encounter random aliens and learn about their species, habitat, size, weight, and lifespan.
+
+```{pyodide}
+import requests
+
+def get_random_alien():
+    url = "http://eijoac.pythonanywhere.com/aliens/random"
+    response = requests.get(url)
+    return response.json() if response.status_code == 200 else None
+
+def play():
+    alien = get_random_alien()
+    if alien:
+        print(f"You encountered a {alien['species']} from the {alien['habitat']} habitat!")
+        print(f"Size: {alien['size']}, Weight: {alien['weight']}, Lifespan: {alien['lifespan']} years")
+    else:
+        print("Failed to load alien data.")
+
+play()
+```
+
+## Conclusion
+
+You’ve learned how to make web API calls using Python with the Alien Species API. You now understand endpoints, headers, HTTP response status code, query parameters, and how to build simple programs based on real-time data. Have fun exploring more APIs and building your own projects!
