@@ -1,8 +1,6 @@
 project:
   type: website
   output-dir: docs
-  render: 
-    - index.qmd
 
 website:
   title: "A Beginner's Guide to Making Web API Calls"

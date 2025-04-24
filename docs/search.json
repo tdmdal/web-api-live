@@ -1,5 +1,110 @@
 [
   {
+    "objectID": "slides.html#web-apis",
+    "href": "slides.html#web-apis",
+    "title": "First Contact: Web APIs",
+    "section": "Web APIs",
+    "text": "Web APIs\n\nWhat’s an API?\n\nAPI vs UI\n\nWhat is a Web API?\n\nHTTP-based API\nHTTP methods: GET, POST, etc.\nExamples: CoinGecko API and OpenAI API"
+  },
+  {
+    "objectID": "slides.html#plan-for-today",
+    "href": "slides.html#plan-for-today",
+    "title": "First Contact: Web APIs",
+    "section": "Plan for Today",
+    "text": "Plan for Today\n\nLearn how to interact with a Web API\n\nMake simple API calls (GET requests)\nParse JSON data returned from an API call\nRecognize common HTTP responses\nUnderstand what HTTP headers are\nBuild a simple alien species explorer game\n\nUse Python’s requests library\nUse a custom-built Alien Species API"
+  },
+  {
+    "objectID": "slides.html#api-endpoints",
+    "href": "slides.html#api-endpoints",
+    "title": "First Contact: Web APIs",
+    "section": "API Endpoints",
+    "text": "API Endpoints\n\nA specific URL that provides access to a particular resource or functionality\nAlien Species API: https://eijoac.pythonanywhere.com\n\n/aliens/random: Get a random alien species\n/species: Get a list of all species\n/habitats: Get a list of all habitats\n/sizes: Get a list of all sizes\n/aliens/species/{species_name}: Get alien details by species\nGET /aliens?habitat=Jungle&size=Large: Filter aliens by habitat and/or size"
+  },
+  {
+    "objectID": "slides.html#get-request",
+    "href": "slides.html#get-request",
+    "title": "First Contact: Web APIs",
+    "section": "GET Request",
+    "text": "GET Request"
+  },
+  {
+    "objectID": "slides.html#get-request-continued",
+    "href": "slides.html#get-request-continued",
+    "title": "First Contact: Web APIs",
+    "section": "GET Request (continued)",
+    "text": "GET Request (continued)"
+  },
+  {
+    "objectID": "slides.html#get-request-exercise",
+    "href": "slides.html#get-request-exercise",
+    "title": "First Contact: Web APIs",
+    "section": "GET Request (exercise)",
+    "text": "GET Request (exercise)\nTry calling the /species, /habitats, and /sizes endpoints."
+  },
+  {
+    "objectID": "slides.html#http-headers",
+    "href": "slides.html#http-headers",
+    "title": "First Contact: Web APIs",
+    "section": "HTTP Headers",
+    "text": "HTTP Headers\n\nProvide additional information for requests and responses.\nCommon HTTP Headers are:\n\nContent-Type: Specifies the format of request/response data\nAccept: Tells the server what kind of response format you want.\nUser-Agent: Identifies the client (e.g., browser or app).\nAuthorization: Sends authentication credentials like API keys."
+  },
+  {
+    "objectID": "slides.html#http-headers-default-headers",
+    "href": "slides.html#http-headers-default-headers",
+    "title": "First Contact: Web APIs",
+    "section": "HTTP Headers (default headers)",
+    "text": "HTTP Headers (default headers)"
+  },
+  {
+    "objectID": "slides.html#http-headers-set-headers",
+    "href": "slides.html#http-headers-set-headers",
+    "title": "First Contact: Web APIs",
+    "section": "HTTP Headers (set headers)",
+    "text": "HTTP Headers (set headers)"
+  },
+  {
+    "objectID": "slides.html#http-response-status-codes",
+    "href": "slides.html#http-response-status-codes",
+    "title": "First Contact: Web APIs",
+    "section": "HTTP Response Status Codes",
+    "text": "HTTP Response Status Codes\n\nIndicate the result of a request.\nSome typical HTTP status codes:\n\n200 OK: Request successful\n201 Created: Resource successfully created (commonly with POST requests)\n400 Bad Request: Invalid request\n401 Unauthorized: Authentication required\n404 Not Found: Resource not found\n500 Internal Server Error: Server error"
+  },
+  {
+    "objectID": "slides.html#status-codes-exercise",
+    "href": "slides.html#status-codes-exercise",
+    "title": "First Contact: Web APIs",
+    "section": "Status Codes (exercise)",
+    "text": "Status Codes (exercise)\nCall /aliens/species/Vexor and then try /aliens/species/Unknown."
+  },
+  {
+    "objectID": "slides.html#query-parameters",
+    "href": "slides.html#query-parameters",
+    "title": "First Contact: Web APIs",
+    "section": "Query Parameters",
+    "text": "Query Parameters\n\nAPIs often let you pass query parameters to filter or modify results\n\nNot all APIs support query parameters\nParameters can be used to filter results, sort data, or paginate through large datasets\n\nQuery parameters are added to the URL after a ? and separated by &\n\nExample: https://eijoac.pythonanywhere.com/aliens?habitat=Jungle&size=Large\nSome APIs use path parameters (e.g., /aliens/species/{species_name})"
+  },
+  {
+    "objectID": "slides.html#query-parameters-set-parameters",
+    "href": "slides.html#query-parameters-set-parameters",
+    "title": "First Contact: Web APIs",
+    "section": "Query Parameters (set parameters)",
+    "text": "Query Parameters (set parameters)"
+  },
+  {
+    "objectID": "slides.html#query-parameters-exercise",
+    "href": "slides.html#query-parameters-exercise",
+    "title": "First Contact: Web APIs",
+    "section": "Query Parameters (exercise)",
+    "text": "Query Parameters (exercise)\nTry filtering aliens by habitat and size with other combinations too!"
+  },
+  {
+    "objectID": "slides.html#a-simple-alien-explorer-game",
+    "href": "slides.html#a-simple-alien-explorer-game",
+    "title": "First Contact: Web APIs",
+    "section": "A Simple Alien Explorer Game",
+    "text": "A Simple Alien Explorer Game\nEncounter and learn about random aliens."
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "First Contact: A Beginner’s Guide to Web APIs",
